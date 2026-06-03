@@ -46,13 +46,13 @@ add_share() {
   echo "=== Add a new Samba share ==="
   separator
 
-  read -p "Share name (e.g. Media, DiskB): " SHARE_NAME
+  read -p "Share name (e.g. Media): " SHARE_NAME
   if grep -q "^\[${SHARE_NAME}\]" "$SMB_CONF" 2>/dev/null; then
     echo "ERROR: Share [$SHARE_NAME] already exists."
     exit 1
   fi
 
-  echo "Common paths: /mnt/diskA  /mnt/diskB  /mnt/diskC"
+  echo "Common paths: /srv/samba"
   read -p "Path to share: " SHARE_PATH
   if [ ! -d "$SHARE_PATH" ]; then
     echo "WARNING: Path $SHARE_PATH does not exist yet."
