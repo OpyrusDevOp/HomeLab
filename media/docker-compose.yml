@@ -1,0 +1,28 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    volumes:
+      - ${ROOT_CONFIG_DIR}/jellyfin:/config
+      - ${ROOT_DATA_DIR}/media:/data/media
+    networks:
+      - homelab_net
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+      LOG_LEVEL: debug
+    volumes:
+      - ${ROOT_CONFIG_DIR}/jellyseerr:/app/config
+    networks:
+      - homelab_net
+
+networks:
+  homelab_net:
+    external: true
