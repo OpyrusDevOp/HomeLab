@@ -1,12 +1,12 @@
 services:
   npm:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: "jc21/nginx-proxy-manager:latest"
     container_name: npm
     restart: unless-stopped
     ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
+      - "80:80"
+      - "81:81"
+      - "443:443"
     volumes:
       - ${ROOT_CONFIG_DIR}/npm/data:/data
       - ${ROOT_CONFIG_DIR}/npm/letsencrypt:/etc/letsencrypt
@@ -18,20 +18,19 @@ services:
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp" # Only if you use Pi-hole as DHCP server
-      - "8080:80/tcp" # Web interface on 8080 to avoid conflict with NPM
+    network_mode: host # replaces the networks block
+    cap_add:
+      - NET_ADMIN # needed for DHCP
+      - SYS_NICE # helps FTL scheduler
     environment:
       TZ: ${TZ}
-      WEBPASSWORD: 'admin' # Change this after setup
+      WEBPASSWORD: "admin" # Change this after setup
+      FTLCONF_webserver_port: "8080" # HTTP on 8080
+      FTLCONF_webserver_tls_port: "8443" # HTTPS on 8443 (avoids 443 too)
     volumes:
       - ${ROOT_CONFIG_DIR}/pihole/etc-pihole:/etc/pihole
       - ${ROOT_CONFIG_DIR}/pihole/etc-dnsmasq.d:/etc/dnsmasq.d
     restart: unless-stopped
-    networks:
-      - homelab_net
 
 networks:
   homelab_net:
