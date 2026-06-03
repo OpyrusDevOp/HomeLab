@@ -14,7 +14,7 @@ echo "=== Starting HomeLab Services ==="
 for service in "${SERVICES[@]}"; do
     if [ -d "$service" ]; then
         echo "Starting $service..."
-        docker compose -f "$service/docker-compose.yml" up -d
+        docker compose --env-file .env -f "$service/docker-compose.yml" up -d
     else
         echo "Warning: Directory $service not found. Skipping."
     fi
