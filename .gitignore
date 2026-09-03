@@ -1,1 +1,9 @@
+# Environment & Secret files
 .env
+*.env
+.env.*
+!.env.example
+
+# Service storage / CouchDB data
+**/obsidian-sync/data/
+**/obsidian-sync/etc/
