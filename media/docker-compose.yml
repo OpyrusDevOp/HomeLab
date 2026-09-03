@@ -3,6 +3,7 @@ services:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    #network_mode: host
     environment:
       TZ: ${TZ}
     volumes:
@@ -20,6 +21,23 @@ services:
       LOG_LEVEL: debug
     volumes:
       - ${ROOT_CONFIG_DIR}/jellyseerr:/app/config
+    networks:
+      - homelab_net
+
+  komga:
+    image: gotson/komga:latest
+    container_name: komga
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      # Optional: set JVM memory limits if your homelab system is tight on RAM (e.g., -Xmx1g)
+      # - JAVA_TOOL_OPTIONS=-Xmx1g 
+    volumes:
+      - ${ROOT_CONFIG_DIR}/komga:/config
+      # Maps your main media directory so Komga can see your comic folder
+      - ${ROOT_DATA_DIR}/media/Books:/Books
+    ports:
+      - 25600:25600
     networks:
       - homelab_net
 

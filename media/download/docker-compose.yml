@@ -14,7 +14,7 @@ services:
       - "6881:6881/udp"
     volumes:
       - ${ROOT_CONFIG_DIR}/qbittorrent:/config
-      - ${ROOT_DATA_DIR}/Downloads:/downloads
+      - ${ROOT_DATA_DIR}:/data
     networks:
       - homelab_net
 

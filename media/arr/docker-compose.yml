@@ -10,7 +10,6 @@ services:
     volumes:
       - ${ROOT_CONFIG_DIR}/sonarr:/config
       - ${ROOT_DATA_DIR}:/data
-      - ${ROOT_DATA_DIR}/Downloads:/downloads
     networks:
       - homelab_net
 
@@ -25,21 +24,6 @@ services:
     volumes:
       - ${ROOT_CONFIG_DIR}/radarr:/config
       - ${ROOT_DATA_DIR}:/data
-      - ${ROOT_DATA_DIR}/Downloads:/downloads
-    networks:
-      - homelab_net
-
-  lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
-    container_name: lidarr
-    restart: unless-stopped
-    environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: ${TZ}
-    volumes:
-      - ${ROOT_CONFIG_DIR}/lidarr:/config
-      - ${ROOT_DATA_DIR}:/data
     networks:
       - homelab_net
 
@@ -53,17 +37,6 @@ services:
       TZ: ${TZ}
     volumes:
       - ${ROOT_CONFIG_DIR}/prowlarr:/config
-      - ${ROOT_DATA_DIR}/Downloads:/downloads
-    networks:
-      - homelab_net
-
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    container_name: flaresolverr
-    restart: unless-stopped
-    environment:
-      LOG_LEVEL: info
-      TZ: ${TZ}
     networks:
       - homelab_net
 
