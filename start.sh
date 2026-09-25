@@ -15,9 +15,11 @@ for service in "${SERVICES[@]}"; do
   if [ -d "$service" ]; then
     echo "Starting $service..."
     docker compose --env-file .env -f "$service/docker-compose.yml" up -d
+    
   else
     echo "Warning: Directory $service not found. Skipping."
   fi
 done
+docker compose --project-directory . -f ./obsidian-sync/docker-compose.yml up -d
 
 echo "All services started."

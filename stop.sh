@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of service directories
-SERVICES=("core" "media" "arr" "download")
+SERVICES=("core" "media" "arr" "download" "obsidian-sync")
 
 echo "=== Stopping HomeLab Services ==="
 

@@ -17,6 +17,8 @@ CONFIG_DIR=${CONFIG_DIR:-$DEFAULT_CONFIG_DIR}
 # Create directories if they don't exist
 mkdir -p "$DATA_DIR"/{downloads,media/{movies,tv}}
 mkdir -p "$CONFIG_DIR"/{npm/{data,letsencrypt},pihole,jellyfin,jellyseerr,sonarr,radarr,prowlarr,qbittorrent,certs}
+mkdir -p ./obsidian-sync/data ./obsidian-sync/etc
+sudo chown -R 5984:5984 ./obsidian-sync/data ./obsidian-sync/etc
 
 # Function to handle SSL
 setup_ssl() {
@@ -65,6 +67,8 @@ setup_ssl
 echo "ROOT_DATA_DIR=$DATA_DIR" >.env
 echo "ROOT_CONFIG_DIR=$CONFIG_DIR" >>.env
 echo "TZ=$(timedatectl | grep "Time zone" | awk '{print $3}' || echo "UTC")" >>.env
+echo "COUCHDB_USER=admin" >>.env
+echo "COUCHDB_PASSWORD=$(openssl rand -hex 16)" >>.env
 
 echo ".env file generated with:"
 cat .env

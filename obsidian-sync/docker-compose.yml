@@ -1,21 +1,19 @@
-version: "3.8"
-
 services:
   couchdb:
     image: couchdb:latest
     container_name: obsidian-couchdb
     restart: unless-stopped
     environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=
+      - COUCHDB_USER=${COUCHDB_USER}
+      - COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
     volumes:
       - ./data:/opt/couchdb/data
       - ./etc:/opt/couchdb/etc/local.d
     ports:
       - "5984:5984"
     networks:
-      - homelab-net
+      - homelab_net
 
 networks:
-  homelab-net:
+  homelab_net:
     external: true
